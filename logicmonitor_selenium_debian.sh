@@ -31,15 +31,15 @@ SELENIUM_JAR_URL=$(curl -sS https://www.selenium.dev/downloads/ | grep "Latest s
 curl -sS $SELENIUM_JAR_URL -o ~/selenium-server-standalone.jar
 
 #Make custom directory in LogicMonitor Collector directory
-if [ -d "/usr/local/logicmonitor/agent/custom" ] 
+if [ -d "/usr/local/logicmonitor/agent/local/lib" ]
 then
-    echo "Directory /usr/local/logicmonitor/agent/custom exists" 
+    echo "Directory /usr/local/logicmonitor/agent/local exists"
 else
-    sudo mkdir /usr/local/logicmonitor/agent/custom
+    sudo mkdir -p /usr/local/logicmonitor/agent/local/lib
 fi
 
 #Move Selenium to LogicMonitor Collector's custom directory
-mv -f ~/selenium-server-standalone.jar /usr/local/logicmonitor/agent/custom/selenium-server-standalone.jar
+mv -f ~/selenium-server-standalone.jar /usr/local/logicmonitor/agent/local/lib/selenium-server-standalone.jar
 
 #Get number of jars on Collector in order to properly increment
 TOTAL_JARS=`egrep "wrapper.java.classpath.[0-9]+=../" /usr/local/logicmonitor/agent/conf/wrapper.conf -o | sort | wc -l`
@@ -57,7 +57,7 @@ if grep -q "selenium" /usr/local/logicmonitor/agent/conf/wrapper.conf
 then
    echo "Selenium already in wrapper config - exiting."
 else
-   sudo sed -i "${JAR_INDEX}iwrapper.java.classpath.${NEW_JAR}=../custom/selenium-server-standalone.jar" /usr/local/logicmonitor/agent/conf/wrapper.conf
+   sudo sed -i "${JAR_INDEX}iwrapper.java.classpath.${NEW_JAR}=../local/lib/selenium-server-standalone.jar" /usr/local/logicmonitor/agent/conf/wrapper.conf
    #Now let's restart the collector
    echo "Restarting Collector"
    sudo systemctl restart logicmonitor-agent.service
