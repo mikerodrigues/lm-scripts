@@ -31,12 +31,7 @@ SELENIUM_JAR_URL=$(curl -sS https://www.selenium.dev/downloads/ | grep "Latest s
 curl -sS $SELENIUM_JAR_URL -o ~/selenium-server-standalone.jar
 
 #Make custom directory in LogicMonitor Collector directory
-if [ -d "/usr/local/logicmonitor/agent/local/lib" ]
-then
-    echo "Directory /usr/local/logicmonitor/agent/local/lib exists"
-else
-    sudo mkdir -p /usr/local/logicmonitor/agent/local/lib
-fi
+sudo mkdir -p /usr/local/logicmonitor/agent/local/lib
 
 #Move Selenium to LogicMonitor Collector's custom directory
 mv -f ~/selenium-server-standalone.jar /usr/local/logicmonitor/agent/local/lib/selenium-server-standalone.jar
