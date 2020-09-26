@@ -33,7 +33,7 @@ curl -sS $SELENIUM_JAR_URL -o ~/selenium-server-standalone.jar
 #Make custom directory in LogicMonitor Collector directory
 if [ -d "/usr/local/logicmonitor/agent/local/lib" ]
 then
-    echo "Directory /usr/local/logicmonitor/agent/local exists"
+    echo "Directory /usr/local/logicmonitor/agent/local/lib exists"
 else
     sudo mkdir -p /usr/local/logicmonitor/agent/local/lib
 fi
