@@ -4,7 +4,7 @@
 CHROME_DRIVER_VERSION=`curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE`
 
 # Remove existing downloads and binaries so we can start from scratch.
-sudo apt-get remove google-chrome-stable
+sudo dpkg -r google-chrome-stable
 rm ~/selenium-server-standalone-*.jar
 rm ~/chromedriver_linux64.zip
 rm ~/usr/logic/bin/chromedriver
@@ -13,7 +13,7 @@ sudo rm /usr/local/bin/selenium-server-standalone.jar
 
 #Download latest package of Chrome
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo apt install ./google-chrome-stable_current_amd64.deb
+sudo dpkg -i ./google-chrome-stable_current_amd64.deb
 
 # Get unzip
 sudo apt-get install unzip -y
