@@ -12,14 +12,14 @@ sudo rm /usr/local/bin/chromedriver
 sudo rm /usr/local/bin/selenium-server-standalone.jar
 
 #Download latest package of Chrome
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+curl -sS https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o google-chrome-stable_current_amd64.deb
 sudo dpkg -i ./google-chrome-stable_current_amd64.deb
 
 # Get unzip
 sudo apt-get install unzip -y
 
 # Install ChromeDriver.
-wget -N https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip -P ~/
+curl -sS https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip -o ~/chromedriver_linux64.zip
 unzip ~/chromedriver_linux64.zip -d ~/
 rm ~/chromedriver_linux64.zip
 sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
@@ -27,7 +27,8 @@ sudo chown root:root /usr/local/bin/chromedriver
 sudo chmod 0755 /usr/local/bin/chromedriver
 
 #Instal Selenium
-wget -N https://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar -P ~/
+SELENIUM_JAR_URL=$(curl -sS https://www.selenium.dev/downloads/ | grep "Latest stable" | grep -o "https://.*jar")
+curl -sS $SELENIUM_JAR_URL -o ~/selenium-server-standalone.jar
 
 #Make custom directory in LogicMonitor Collector directory
 if [ -d "/usr/local/logicmonitor/agent/custom" ] 
@@ -38,7 +39,7 @@ else
 fi
 
 #Move Selenium to LogicMonitor Collector's custom directory
-mv -f ~/selenium-server-standalone-3.141.59.jar /usr/local/logicmonitor/agent/custom/selenium-server-standalone.jar
+mv -f ~/selenium-server-standalone.jar /usr/local/logicmonitor/agent/custom/selenium-server-standalone.jar
 
 #Get number of jars on Collector in order to properly increment
 TOTAL_JARS=`egrep "wrapper.java.classpath.[0-9]+=../" /usr/local/logicmonitor/agent/conf/wrapper.conf -o | sort | wc -l`
