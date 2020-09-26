@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# exit on non-zero exit code
+set -e
+set -o pipefail
+
+# exit on unbound variables
+set -u
+
 # Versions
 CHROME_DRIVER_VERSION=`curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE`
 
