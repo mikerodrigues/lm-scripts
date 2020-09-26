@@ -45,7 +45,9 @@ read -n 1 -s -r -p "Press any key to continue"
 CHROME_DRIVER_VERSION=`curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE`
 
 # Remove existing downloads and binaries so we can start from scratch.
-sudo rm /usr/local/bin/chromedriver
+if test -f /usr/local/bin/chromedriver; then
+	sudo rm /usr/local/bin/chromedriver
+fi
 
 #Download latest package of Chrome
 CHROME_PKG_TMP=$(mktemp)
